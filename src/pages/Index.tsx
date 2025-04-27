@@ -1,104 +1,69 @@
-
 import React, { useState } from "react";
-import { BookRecommendationForm } from "@/components/book-finder/BookRecommendationForm";
-import { BookRecommendationResults } from "@/components/book-finder/BookRecommendationResults";
 import { Header } from "@/components/book-finder/Header";
+import { TagPromptButton } from "@/components/book-finder/TagPromptButton";
 import { QuoteSection } from "@/components/book-finder/QuoteSection";
+import { BookGrid } from "@/components/book-finder/BookGrid";
 
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  description: string;
-  coverUrl?: string;
-}
-
-interface FormData {
-  interests: string;
-  genres: string[];
-  readingLevel: string;
-  favoriteAuthors: string;
-  mood: string;
-  language: string;
-  location: string;
-  ageGroup: string;
-  readingTime: string;
-}
+// Sample book data
+const sampleBooks = [
+  { id: "1", title: "Book 1" },
+  { id: "2", title: "Book 1" },
+  { id: "3", title: "Book 1" },
+  { id: "4", title: "Book 1" },
+];
 
 export default function Index() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [recommendations, setRecommendations] = useState<Book[]>([]);
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [books, setBooks] = useState(sampleBooks);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const handleFormSubmit = async (formData: FormData) => {
-    setIsLoading(true);
-    setFormSubmitted(true);
-    
-    console.log("Form submitted with data:", formData);
-    
-    // Simulate API call to LLM for book recommendations
-    setTimeout(() => {
-      // Mock data - in a real app this would come from an API
-      const mockRecommendations: Book[] = [
-        {
-          id: "1",
-          title: "The Hidden Garden",
-          author: "Eleanor Montgomery",
-          description: "A magical tale of discovery and wonder in a forgotten garden that holds secrets of the past.",
-          coverUrl: "https://source.unsplash.com/random/300x450/?book,garden"
-        },
-        {
-          id: "2",
-          title: "Whispers in the Fog",
-          author: "James Holloway",
-          description: "Set in a misty coastal town, this mystery unravels dark secrets that have been buried for generations.",
-          coverUrl: "https://source.unsplash.com/random/300x450/?book,fog"
-        },
-        {
-          id: "3",
-          title: "Starlight Memories",
-          author: "Sophia Chen",
-          description: "A heartwarming journey of family bonds and childhood memories under the summer night sky.",
-          coverUrl: "https://source.unsplash.com/random/300x450/?book,stars"
-        },
-        {
-          id: "4",
-          title: "The Clockmaker's Daughter",
-          author: "Thomas Wright",
-          description: "An intricate tale of time, love, and the delicate mechanisms that connect our lives.",
-          coverUrl: "https://source.unsplash.com/random/300x450/?book,clock"
-        }
-      ];
-      
-      setRecommendations(mockRecommendations);
-      setIsLoading(false);
-    }, 2000); // Simulate 2-second API call
+  const handleTagPromptClick = () => {
+    // In a real application, this would open a tag selection modal
+    // or navigate to a tag selection page
+    console.log("Tag prompt clicked");
+  };
+
+  const handleSeeMore = (bookId: string) => {
+    // In a real application, this would navigate to a book details page
+    console.log(`See more clicked for book ${bookId}`);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real application, this would filter books based on search term
+    console.log(`Searching for: ${searchTerm}`);
   };
 
   return (
-    <main className="font-serif">
+    <main>
       <link
-        href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet"
       />
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 p-4">
-        <Header title="Find Your Next Magical Read" />
-        
-        {!formSubmitted ? (
-          <>
-            <QuoteSection />
-            <BookRecommendationForm onSubmit={handleFormSubmit} />
-          </>
-        ) : (
-          <BookRecommendationResults 
-            books={recommendations} 
-            isLoading={isLoading} 
-            onReset={() => {
-              setFormSubmitted(false);
-              setRecommendations([]);
-            }} 
-          />
-        )}
+      <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-100 p-4">
+        <Header />
+
+        {/* Search form */}
+        <form onSubmit={handleSearch} className="w-full max-w-md mb-8">
+          <div className="flex">
+            <input
+              type="text"
+              placeholder="Search for books..."
+              className="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="bg-gray-800 text-white px-4 py-2 rounded-r-md hover:bg-gray-700 transition-colors"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+
+        <TagPromptButton onClick={handleTagPromptClick} />
+        <QuoteSection />
+        <BookGrid books={books} onSeeMore={handleSeeMore} />
       </div>
     </main>
   );
