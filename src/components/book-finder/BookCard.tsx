@@ -1,4 +1,3 @@
-
 import React from "react";
 
 interface BookCardProps {
@@ -8,14 +7,14 @@ interface BookCardProps {
 
 export function BookCard({ title, onSeeMore }: BookCardProps) {
   return (
-    <div className="bg-primary text-primary-foreground flex flex-col items-center justify-center p-5 rounded-lg shadow-soft transition-all hover:shadow-md">
+    <div className="bg-black text-white flex flex-col items-center justify-center p-5">
       <div
-        className="w-[60px] h-[60px] bg-background-secondary mb-5 rounded-md"
+        className="w-[60px] h-[60px] bg-white mb-5"
         aria-label="Book cover"
       />
       <span className="text-base font-medium">{title}</span>
       <button
-        className="text-sm text-accent hover:text-accent/80 mt-2 transition-colors"
+        className="text-sm text-gray-400 mt-2 hover:text-gray-300 transition-colors"
         onClick={onSeeMore}
       >
         See More ›
@@ -23,4 +22,3 @@ export function BookCard({ title, onSeeMore }: BookCardProps) {
     </div>
   );
 }
-
