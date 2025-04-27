@@ -3,6 +3,8 @@ import { Header } from "@/components/book-finder/Header";
 import { TagPromptButton } from "@/components/book-finder/TagPromptButton";
 import { QuoteSection } from "@/components/book-finder/QuoteSection";
 import { BookGrid } from "@/components/book-finder/BookGrid";
+import { PromptBar } from "@/components/book-finder/PromptBar";
+import { BookPreferences } from "@/types/promptTypes";
 
 // Sample book data
 const sampleBooks = [
@@ -14,7 +16,11 @@ const sampleBooks = [
 
 export default function Index() {
   const [books, setBooks] = useState(sampleBooks);
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const handlePreferencesComplete = (preferences: BookPreferences) => {
+    // In a real application, this would call the LLM API with the preferences
+    console.log("Preferences submitted:", preferences);
+  };
 
   const handleTagPromptClick = () => {
     // In a real application, this would open a tag selection modal
@@ -27,12 +33,6 @@ export default function Index() {
     console.log(`See more clicked for book ${bookId}`);
   };
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In a real application, this would filter books based on search term
-    console.log(`Searching for: ${searchTerm}`);
-  };
-
   return (
     <main>
       <link
@@ -41,26 +41,7 @@ export default function Index() {
       />
       <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-100 p-4">
         <Header />
-
-        {/* Search form */}
-        <form onSubmit={handleSearch} className="w-full max-w-md mb-8">
-          <div className="flex">
-            <input
-              type="text"
-              placeholder="Search for books..."
-              className="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button
-              type="submit"
-              className="bg-gray-800 text-white px-4 py-2 rounded-r-md hover:bg-gray-700 transition-colors"
-            >
-              Search
-            </button>
-          </div>
-        </form>
-
+        <PromptBar onComplete={handlePreferencesComplete} />
         <TagPromptButton onClick={handleTagPromptClick} />
         <QuoteSection />
         <BookGrid books={books} onSeeMore={handleSeeMore} />
