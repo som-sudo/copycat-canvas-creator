@@ -1,6 +1,6 @@
+
 import React, { useState } from "react";
 import { Header } from "@/components/book-finder/Header";
-import { TagPromptButton } from "@/components/book-finder/TagPromptButton";
 import { QuoteSection } from "@/components/book-finder/QuoteSection";
 import { BookGrid } from "@/components/book-finder/BookGrid";
 import { PromptBar } from "@/components/book-finder/PromptBar";
@@ -22,12 +22,6 @@ export default function Index() {
     console.log("Preferences submitted:", preferences);
   };
 
-  const handleTagPromptClick = () => {
-    // In a real application, this would open a tag selection modal
-    // or navigate to a tag selection page
-    console.log("Tag prompt clicked");
-  };
-
   const handleSeeMore = (bookId: string) => {
     // In a real application, this would navigate to a book details page
     console.log(`See more clicked for book ${bookId}`);
@@ -42,7 +36,6 @@ export default function Index() {
       <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-100 p-4">
         <Header />
         <PromptBar onComplete={handlePreferencesComplete} />
-        <TagPromptButton onClick={handleTagPromptClick} />
         <QuoteSection />
         <BookGrid books={books} onSeeMore={handleSeeMore} />
       </div>
