@@ -5,11 +5,11 @@
 
 @layer base {
   :root {
-    --background: 45 20% 98%; // Ivory converted to HSL
-    --foreground: 0 0% 20%; // Charcoal converted to HSL
-    --primary: 130 20% 70%; // Sage Green converted to HSL
-    --secondary: 210 40% 75%; // Dusty Blue converted to HSL
-    --accent: 30 50% 65%; // Muted Gold converted to HSL
+    --background: 45 20% 98%; /* Ivory converted to HSL */
+    --foreground: 0 0% 20%; /* Charcoal converted to HSL */
+    --primary: 130 20% 70%; /* Sage Green converted to HSL */
+    --secondary: 210 40% 75%; /* Dusty Blue converted to HSL */
+    --accent: 30 50% 65%; /* Muted Gold converted to HSL */
   }
 
   .dark {
